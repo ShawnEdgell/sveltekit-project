@@ -1,16 +1,12 @@
 <script>
-	// Your Svelte logic
+	// Add any Home-specific logic here
 </script>
 
-<div class="hero bg-base-200 min-h-screen">
-	<div class="hero-content text-center">
-		<div class="max-w-md">
-			<h1 class="text-5xl font-bold">Hello there</h1>
-			<p class="py-6">
-				Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-				quasi. In deleniti eaque aut repudiandae et a id nisi.
-			</p>
-			<button class="btn btn-primary">Get Started</button>
-		</div>
-	</div>
-</div>
+<section>
+	<h1>Welcome to Our Home Page</h1>
+	<p>This is the home page of our site, where you can find an overview of what we offer.</p>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius felis et velit varius,
+		vitae bibendum nisi pulvinar.
+	</p>
+</section>

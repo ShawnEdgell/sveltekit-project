@@ -1,9 +1,9 @@
-<footer class="footer footer-center bg-neutral text-neutral-content rounded p-10">
+<footer class="footer footer-center bg-base-100 p-10">
 	<nav class="grid grid-flow-col gap-4">
-		<a href="/1" class="link link-hover">Page 1</a>
-		<a href="/2" class="link link-hover">Page 2</a>
-		<a href="/3" class="link link-hover">Page 3</a>
-		<a href="/4" class="link link-hover">Page 4</a>
+		<a href="/about" class="link link-hover">About Us</a>
+		<a href="/blog" class="link link-hover">Blog</a>
+		<a href="/contact" class="link link-hover">Contact</a>
+		<a href="/services" class="link link-hover">Services</a>
 	</nav>
 	<nav>
 		<div class="grid grid-flow-col gap-4">

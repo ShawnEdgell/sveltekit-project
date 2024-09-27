@@ -1,4 +1,5 @@
 import daisyui from 'daisyui';
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,7 +7,10 @@ export default {
 	theme: {
 		extend: {}
 	},
-	plugins: [daisyui], // Use the imported module
+	plugins: [
+		daisyui, // Use the imported Daisy UI module
+		typography // Add Tailwind Typography plugin here
+	],
 	daisyui: {
 		themes: ['light'] // Add light and dark themes
 	}
