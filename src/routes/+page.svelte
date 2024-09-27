@@ -30,6 +30,11 @@
 <svelte:head>
 	<link rel="preconnect" href="https://www.youtube.com" />
 	<link rel="preconnect" href="https://img.youtube.com" />
+	<title>Popland - Recent News</title>
+	<meta
+		name="description"
+		content="Discover the latest official updates, news, and videos from Skater XL, Session, Skate, and more—all in one place."
+	/>
 </svelte:head>
 
 <article>
@@ -46,7 +51,7 @@
 			<button
 				on:click={() => toggleNews(playlistId)}
 				class="btn btn-sm mr-2 mb-2 {activePlaylistId === playlistId
-					? 'bg-blue-500 text-white'
+					? 'bg-blue-700 text-white'
 					: 'bg-gray-200 text-gray-800'}"
 			>
 				{name}
