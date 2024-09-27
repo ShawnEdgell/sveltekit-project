@@ -1,9 +1,9 @@
 <footer class="footer footer-center bg-base-100 p-10">
 	<nav class="grid grid-flow-col gap-4">
 		<a href="/about" class="link link-hover">About Us</a>
-		<a href="/blog" class="link link-hover">Blog</a>
-		<a href="/contact" class="link link-hover">Contact</a>
-		<a href="/services" class="link link-hover">Services</a>
+		<a href="/mods" class="link link-hover">Mods</a>
+		<a href="/news" class="link link-hover">News</a>
+		<a href="/community" class="link link-hover">Community</a>
 	</nav>
 	<nav>
 		<div class="grid grid-flow-col gap-4">

@@ -1,5 +1,6 @@
 import daisyui from 'daisyui';
 import typography from '@tailwindcss/typography';
+import aspectRatio from '@tailwindcss/aspect-ratio';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,10 +8,7 @@ export default {
 	theme: {
 		extend: {}
 	},
-	plugins: [
-		daisyui, // Use the imported Daisy UI module
-		typography // Add Tailwind Typography plugin here
-	],
+	plugins: [daisyui, typography, aspectRatio],
 	daisyui: {
 		themes: ['light'] // Add light and dark themes
 	}

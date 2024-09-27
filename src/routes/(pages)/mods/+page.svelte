@@ -3,7 +3,7 @@
 </script>
 
 <section>
-	<h1>Blog</h1>
-	<p>Check out our latest blog posts and updates on various topics.</p>
+	<h1>Mods</h1>
+	<p>Check out our latest mods.</p>
 	<Lorem />
 </section>
