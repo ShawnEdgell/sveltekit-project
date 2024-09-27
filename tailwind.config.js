@@ -1,15 +1,17 @@
+// tailwind.config.js
 import daisyui from 'daisyui';
 import typography from '@tailwindcss/typography';
 import aspectRatio from '@tailwindcss/aspect-ratio';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}', './src/app.html'],
+	mode: 'jit', // Enable Just-In-Time mode
+	purge: ['./src/**/*.{html,js,svelte,ts}', './src/app.html'], // Purge unused styles
 	theme: {
 		extend: {}
 	},
 	plugins: [daisyui, typography, aspectRatio],
 	daisyui: {
-		themes: ['light'] // Add light and dark themes
+		themes: ['light', 'dark'] // Add light and dark themes if needed
 	}
 };

@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import VideoItem from '../components/VideoItem.svelte';
+	import type { ComponentType } from 'svelte';
 
-	type Channel = {
-		name: string;
-		playlistId: string;
-	};
+	// Import the type of the VideoItem component
+	import type VideoItemType from '../components/VideoItem.svelte';
 
+	// Define the ExtendedVideoItem type
 	type ExtendedVideoItem = {
 		title: string;
 		publishedAt: string;
@@ -18,49 +17,28 @@
 		iframeLoaded: boolean;
 	};
 
-	const channels: Channel[] = [
+	let VideoItem: typeof VideoItemType;
+
+	export let data: { videos: ExtendedVideoItem[] };
+	const videos = writable<ExtendedVideoItem[]>(data.videos);
+
+	const activePlaylistId = writable('ALL');
+
+	const channels = [
 		{ name: 'All', playlistId: 'ALL' },
 		{ name: 'Skater XL', playlistId: 'UUpBQRZl7apZt_LQXKgqKQiQ' },
 		{ name: 'Session', playlistId: 'PLWmRSsZZ1RCW-0uQWKlCAiGZVnIaRYaTm' },
 		{ name: 'Skate.', playlistId: 'UUSBQJEWTWOUCO65xvoDfljw' }
 	];
 
-	const videos = writable<ExtendedVideoItem[]>([]);
-	const activePlaylistId = writable('ALL');
-	const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
-
 	onMount(async () => {
-		const channelPromises = channels
-			.filter((channel) => channel.playlistId !== 'ALL')
-			.map((channel) => fetchVideos(channel.playlistId));
+		// Dynamically import the VideoItem component
+		VideoItem = (await import('../components/VideoItem.svelte')).default;
 
-		const allVideosArrays = await Promise.all(channelPromises);
-		const allVideos = allVideosArrays.flat();
-
-		videos.set(
-			allVideos.sort(
-				(a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-			)
-		);
+		// No need to fetch videos here since it's done server-side
 	});
 
-	async function fetchVideos(playlistId: string): Promise<ExtendedVideoItem[]> {
-		const response = await fetch(
-			`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=5&key=${apiKey}`
-		);
-		const data = await response.json();
-		return data.items.map((item: any) => ({
-			title: item.snippet.title,
-			publishedAt: item.snippet.publishedAt,
-			description: item.snippet.description,
-			videoId: item.snippet.resourceId.videoId,
-			playlistId,
-			showFullDescription: false,
-			iframeLoaded: false
-		}));
-	}
-
-	function toggleNews(playlistId: string) {
+	function toggleNews(playlistId: string): void {
 		activePlaylistId.set(playlistId);
 	}
 </script>
@@ -70,7 +48,7 @@
 		<h1>Latest News</h1>
 		<p>
 			Discover the latest official updates, news, and videos from Skater XL, Session, Skate, and
-			more — all in one place.
+			more—all in one place.
 		</p>
 	</div>
 
@@ -79,8 +57,9 @@
 		{#each channels as { name, playlistId }}
 			<button
 				on:click={() => toggleNews(playlistId)}
-				class="btn btn-sm mr-2 mb-2
-        {$activePlaylistId === playlistId ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}"
+				class="btn btn-sm mr-2 mb-2 {$activePlaylistId === playlistId
+					? 'bg-blue-500 text-white'
+					: 'bg-gray-200 text-gray-800'}"
 			>
 				{name}
 			</button>
@@ -89,9 +68,15 @@
 	<hr class="border-t-2 my-4" />
 
 	<!-- Video List -->
-	{#each $videos as video (video.videoId)}
-		{#if $activePlaylistId === 'ALL' || $activePlaylistId === video.playlistId}
-			<VideoItem {video} />
-		{/if}
-	{/each}
+	{#if VideoItem}
+		{#each $videos as video (video.videoId)}
+			{#if $activePlaylistId === 'ALL' || $activePlaylistId === video.playlistId}
+				<svelte:component this={VideoItem} {video} />
+			{/if}
+		{/each}
+	{/if}
 </article>
+
+<style>
+	/* Optional: You can add custom styles here if needed */
+</style>

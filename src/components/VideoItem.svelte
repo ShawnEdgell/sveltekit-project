@@ -14,7 +14,7 @@
 	let container: HTMLElement;
 	let observer: IntersectionObserver;
 
-	function toggleDescription() {
+	function toggleDescription(): void {
 		video.showFullDescription = !video.showFullDescription;
 	}
 
@@ -54,7 +54,7 @@
 </script>
 
 <div class="mb-8">
-	<h2>{video.title}</h2>
+	<h2 class="text-xl font-semibold">{video.title}</h2>
 	<p class="text-sm text-gray-500 mb-2">{formatDate(video.publishedAt)}</p>
 
 	{#if video.description && video.description.trim().length > 0}
@@ -88,11 +88,33 @@
 				class="absolute inset-0 w-full h-full"
 			></iframe>
 		{:else}
-			<img
-				src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
-				alt={video.title}
-				class="absolute inset-0 w-full h-full object-cover"
-			/>
+			<div class="absolute inset-0 w-full h-full flex items-center justify-center bg-black">
+				<img
+					src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
+					alt={video.title}
+					class="w-full h-full object-cover opacity-75"
+					loading="lazy"
+				/>
+				<button
+					class="absolute"
+					on:click={() => (video.iframeLoaded = true)}
+					aria-label="Play video"
+				>
+					<!-- SVG Play Button -->
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-16 w-16 text-white"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+					>
+						<path d="M8 5v14l11-7z" />
+					</svg>
+				</button>
+			</div>
 		{/if}
 	</div>
 </div>
+
+<style>
+	/* Optional: You can add custom styles here if needed */
+</style>

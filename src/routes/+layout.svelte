@@ -5,7 +5,7 @@
 </script>
 
 <div>
-	<div class="flex min-h-screen flex-col items-center overscroll-none">
+	<div data-theme="light" class="flex min-h-screen flex-col items-center overscroll-none">
 		<div class="fixed top-0 z-10 w-full">
 			<Navbar />
 		</div>
