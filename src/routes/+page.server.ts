@@ -1,4 +1,3 @@
-// +page.server.ts
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { YOUTUBE_API_KEY } from '$env/static/private';
@@ -22,24 +21,20 @@ interface YouTubePlaylistItem {
 	};
 }
 
-interface YouTubeAPIErrorDetail {
-	message: string;
-	domain: string;
-	reason: string;
-	location?: string;
-	locationType?: string;
-}
-
-interface YouTubeAPIError {
-	code: number;
-	message: string;
-	errors: YouTubeAPIErrorDetail[];
-}
-
 interface YouTubePlaylistResponse {
 	items?: YouTubePlaylistItem[];
 	nextPageToken?: string;
-	error?: YouTubeAPIError;
+	error?: {
+		code: number;
+		message: string;
+		errors: {
+			message: string;
+			domain: string;
+			reason: string;
+			location?: string;
+			locationType?: string;
+		}[];
+	};
 }
 
 export const load: PageServerLoad = async () => {
@@ -50,15 +45,13 @@ export const load: PageServerLoad = async () => {
 		{ name: 'Skate.', playlistId: 'UUSBQJEWTWOUCO65xvoDfljw' }
 	];
 
-	const apiKey = YOUTUBE_API_KEY;
-
-	if (!apiKey) {
+	if (!YOUTUBE_API_KEY) {
 		throw error(500, 'API key is missing');
 	}
 
 	const channelPromises = channels
 		.filter((channel) => channel.playlistId !== 'ALL')
-		.map((channel) => fetchVideos(channel.playlistId, apiKey));
+		.map((channel) => fetchVideos(channel.playlistId));
 
 	const allVideosArrays = await Promise.all(channelPromises);
 	const allVideos = allVideosArrays.flat();
@@ -70,9 +63,9 @@ export const load: PageServerLoad = async () => {
 	return { videos };
 };
 
-async function fetchVideos(playlistId: string, apiKey: string): Promise<ExtendedVideoItem[]> {
+async function fetchVideos(playlistId: string): Promise<ExtendedVideoItem[]> {
 	const response = await fetch(
-		`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=5&key=${apiKey}`
+		`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=5&key=${YOUTUBE_API_KEY}`
 	);
 	const data: YouTubePlaylistResponse = await response.json();
 
@@ -82,7 +75,6 @@ async function fetchVideos(playlistId: string, apiKey: string): Promise<Extended
 	}
 
 	if (!data.items) {
-		// No items returned
 		return [];
 	}
 

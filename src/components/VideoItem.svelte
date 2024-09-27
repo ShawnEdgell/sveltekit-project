@@ -14,11 +14,11 @@
 	let container: HTMLElement;
 	let observer: IntersectionObserver;
 
-	function toggleDescription(): void {
+	function toggleDescription() {
 		video.showFullDescription = !video.showFullDescription;
 	}
 
-	function formatDate(dateString: string): string {
+	function formatDate(dateString: string) {
 		return new Date(dateString).toLocaleDateString('en-US', {
 			month: 'long',
 			day: 'numeric',
@@ -37,8 +37,6 @@
 				});
 			},
 			{
-				root: null,
-				rootMargin: '0px',
 				threshold: 0.25
 			}
 		);
@@ -49,7 +47,7 @@
 	});
 
 	onDestroy(() => {
-		if (observer) observer.disconnect();
+		observer?.disconnect();
 	});
 </script>
 
@@ -57,22 +55,20 @@
 	<h2 class="text-xl font-semibold">{video.title}</h2>
 	<p class="text-sm text-gray-500 mb-2">{formatDate(video.publishedAt)}</p>
 
-	{#if video.description && video.description.trim().length > 0}
+	{#if video.description?.trim()}
 		{#if video.description.length > 100}
-			<!-- Description with "Read more"/"Show less" functionality -->
 			{#if video.showFullDescription}
 				<p class="mb-2">{video.description}</p>
-				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4">
-					Show less
-				</button>
+				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4"
+					>Show less</button
+				>
 			{:else}
 				<p class="mb-2">{video.description.slice(0, 100)}...</p>
-				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4">
-					Read more
-				</button>
+				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4"
+					>Read more</button
+				>
 			{/if}
 		{:else}
-			<!-- Description without "Read more" button -->
 			<p class="mb-4">{video.description}</p>
 		{/if}
 	{/if}
@@ -116,5 +112,5 @@
 </div>
 
 <style>
-	/* Optional: You can add custom styles here if needed */
+	/* Optional: Add custom styles here */
 </style>
