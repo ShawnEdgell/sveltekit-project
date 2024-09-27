@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-
 	export let video: {
 		title: string;
 		publishedAt: string;
@@ -8,11 +6,9 @@
 		videoId: string;
 		playlistId: string;
 		showFullDescription: boolean;
-		iframeLoaded: boolean;
 	};
 
-	let container: HTMLElement;
-	let observer: IntersectionObserver;
+	let showIframe = false;
 
 	function toggleDescription() {
 		video.showFullDescription = !video.showFullDescription;
@@ -26,29 +22,9 @@
 		});
 	}
 
-	onMount(() => {
-		observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						video.iframeLoaded = true;
-						observer.unobserve(entry.target);
-					}
-				});
-			},
-			{
-				threshold: 0.25
-			}
-		);
-
-		if (container) {
-			observer.observe(container);
-		}
-	});
-
-	onDestroy(() => {
-		observer?.disconnect();
-	});
+	function loadIframe() {
+		showIframe = true;
+	}
 </script>
 
 <div class="mb-8">
@@ -59,58 +35,108 @@
 		{#if video.description.length > 100}
 			{#if video.showFullDescription}
 				<p class="mb-2">{video.description}</p>
-				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4"
-					>Show less</button
-				>
+				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4">
+					Show less
+				</button>
 			{:else}
 				<p class="mb-2">{video.description.slice(0, 100)}...</p>
-				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4"
-					>Read more</button
-				>
+				<button on:click={toggleDescription} class="text-blue-500 hover:underline mb-4">
+					Read more
+				</button>
 			{/if}
 		{:else}
 			<p class="mb-4">{video.description}</p>
 		{/if}
 	{/if}
 
-	<div bind:this={container} class="relative aspect-w-16 aspect-h-9 mb-4">
-		{#if video.iframeLoaded}
+	<div class="video-container mb-4">
+		{#if showIframe}
 			<iframe
-				src={`https://www.youtube.com/embed/${video.videoId}`}
+				src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
 				title={video.title}
 				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 				allowfullscreen
 				loading="lazy"
-				class="absolute inset-0 w-full h-full"
 			></iframe>
 		{:else}
-			<div class="absolute inset-0 w-full h-full flex items-center justify-center bg-black">
+			<div
+				class="video-placeholder"
+				on:click={loadIframe}
+				role="button"
+				tabindex="0"
+				aria-label="Play video"
+				on:keydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						loadIframe();
+					}
+				}}
+			>
 				<img
 					src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
 					alt={video.title}
-					class="w-full h-full object-cover opacity-75"
 					loading="lazy"
 				/>
-				<button
-					class="absolute"
-					on:click={() => (video.iframeLoaded = true)}
-					aria-label="Play video"
+				<svg class="play-button" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"
+					><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+						id="SVGRepo_tracerCarrier"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></g><g id="SVGRepo_iconCarrier"
+						><path
+							fill="red"
+							d="M14.712 4.633a1.754 1.754 0 00-1.234-1.234C12.382 3.11 8 3.11 8 3.11s-4.382 0-5.478.289c-.6.161-1.072.634-1.234 1.234C1 5.728 1 8 1 8s0 2.283.288 3.367c.162.6.635 1.073 1.234 1.234C3.618 12.89 8 12.89 8 12.89s4.382 0 5.478-.289a1.754 1.754 0 001.234-1.234C15 10.272 15 8 15 8s0-2.272-.288-3.367z"
+						></path><path fill="#ffffff" d="M6.593 10.11l3.644-2.098-3.644-2.11v4.208z"></path></g
+					></svg
 				>
-					<!-- SVG Play Button -->
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-16 w-16 text-white"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-					>
-						<path d="M8 5v14l11-7z" />
-					</svg>
-				</button>
 			</div>
 		{/if}
 	</div>
 </div>
 
 <style>
-	/* Optional: Add custom styles here */
+	.video-container {
+		position: relative;
+		width: 100%;
+		/* 16:9 Aspect Ratio */
+		padding-bottom: 56.25%;
+		height: 0;
+		overflow: hidden;
+	}
+
+	.video-container iframe,
+	.video-placeholder {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.video-placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+
+	.video-placeholder img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.play-button {
+		position: relative;
+		width: 64px;
+		height: 64px;
+		color: white;
+		z-index: 1;
+		transition: transform 0.3s;
+	}
+
+	.video-placeholder:hover .play-button {
+		transform: scale(1.1);
+	}
 </style>

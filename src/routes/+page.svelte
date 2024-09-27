@@ -34,7 +34,7 @@
 
 <article>
 	<div class="header">
-		<h1>Latest News</h1>
+		<h1>Recent News</h1>
 		<p>
 			Discover the latest official updates, news, and videos from Skater XL, Session, Skate, and
 			more—all in one place.

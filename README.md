@@ -1,38 +1,16 @@
-# create-svelte
+# Popland
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Everything you need to stay updated with the latest news, guides, mods, and community discussions for Skater XL, Session, Skate, and more.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Guides**: _Coming soon!_ Comprehensive guides to help you master the games.
+- **Mods**: Explore and share mods to enhance your gaming experience.
+- **Community**: Connect with other players, share experiences, and join discussions.
+- **More**: Stay tuned for additional features and content updates.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Built With
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [SvelteKit](https://kit.svelte.dev/) - A framework for building fast, modern web applications.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapid UI development.
+- [DaisyUI](https://daisyui.com/) - A Tailwind CSS component library that adds ready-to-use UI components.
