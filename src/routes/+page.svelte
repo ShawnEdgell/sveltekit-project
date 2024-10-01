@@ -46,7 +46,7 @@
 		</p>
 	</div>
 
-	<div class="flex flex-wrap mb-4">
+	<div class="flex flex-wrap mb-4 b">
 		{#each channels as { name, playlistId }}
 			<button
 				on:click={() => toggleNews(playlistId)}

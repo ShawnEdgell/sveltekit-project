@@ -1,8 +1,8 @@
 <footer class="footer footer-center bg-base-100 p-10">
 	<nav class="grid grid-flow-col gap-4">
-		<a href="/about" class="link link-hover">About Us</a>
-		<a href="/mods" class="link link-hover">Mods</a>
-		<a href="/community" class="link link-hover">Community</a>
+		<a href="/about" class="link link-hover" data-sveltekit-preload-data="hover">About Us</a>
+		<a href="/mods" class="link link-hover" data-sveltekit-preload-data="hover">Mods</a>
+		<a href="/community" class="link link-hover" data-sveltekit-preload-data="hover">Community</a>
 	</nav>
 	<nav>
 		<div class="grid grid-flow-col gap-4">

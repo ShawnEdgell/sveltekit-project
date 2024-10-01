@@ -34,12 +34,12 @@
 	{#if video.description?.trim()}
 		{#if video.description.length > 100}
 			{#if video.showFullDescription}
-				<p class="mb-2">{video.description}</p>
+				<p class="mb-2 break-words">{video.description}</p>
 				<button on:click={toggleDescription} class="text-blue-700 hover:underline mb-4">
 					Show less
 				</button>
 			{:else}
-				<p class="mb-2">{video.description.slice(0, 100)}...</p>
+				<p class="mb-2 break-words">{video.description.slice(0, 100)}...</p>
 				<button on:click={toggleDescription} class="text-blue-700 hover:underline mb-4">
 					Read more
 				</button>
