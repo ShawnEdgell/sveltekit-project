@@ -78,7 +78,7 @@
 					loading="lazy"
 				/>
 				<svg
-					class="relative w-16 h-16 text-white z-10 transform transition-transform duration-300 group-hover:scale-110"
+					class="relative w-16 h-16 text-white z-5 transform transition-transform duration-300 group-hover:scale-110"
 					viewBox="0 0 16 16"
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
