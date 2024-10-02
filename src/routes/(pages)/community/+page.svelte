@@ -10,8 +10,8 @@
 	/>
 </svelte:head>
 
-<section>
+<article>
 	<h1>Community</h1>
 	<p>Check out our community.</p>
 	<Lorem />
-</section>
+</article>

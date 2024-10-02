@@ -18,6 +18,8 @@
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/eslint": "^9.6.0",
+		"@types/estree": "^1.0.6",
+		"@types/json-schema": "^7.0.15",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.10",
 		"eslint": "^9.0.0",

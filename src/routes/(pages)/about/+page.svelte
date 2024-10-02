@@ -10,8 +10,8 @@
 	/>
 </svelte:head>
 
-<section>
+<article>
 	<h1>About Us</h1>
 	<p>This is the About page where we share our story and mission.</p>
 	<Lorem />
-</section>
+</article>

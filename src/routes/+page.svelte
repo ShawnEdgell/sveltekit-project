@@ -1,18 +1,8 @@
 <script lang="ts">
 	import VideoItem from '../components/VideoItem.svelte';
 
-	type ExtendedVideoItem = {
-		title: string;
-		publishedAt: string;
-		description: string;
-		videoId: string;
-		playlistId: string;
-		showFullDescription: boolean;
-		iframeLoaded: boolean;
-	};
-
-	export let data: { videos: ExtendedVideoItem[] };
-	let videos = data.videos;
+	export let data;
+	let { videos } = data;
 	let activePlaylistId = 'ALL';
 
 	const channels = [
@@ -21,10 +11,6 @@
 		{ name: 'Session', playlistId: 'PLWmRSsZZ1RCW-0uQWKlCAiGZVnIaRYaTm' },
 		{ name: 'Skate.', playlistId: 'UUSBQJEWTWOUCO65xvoDfljw' }
 	];
-
-	function toggleNews(playlistId: string) {
-		activePlaylistId = playlistId;
-	}
 </script>
 
 <svelte:head>
@@ -46,10 +32,10 @@
 		</p>
 	</div>
 
-	<div class="flex flex-wrap mb-4 b">
+	<div class="flex flex-wrap mb-4">
 		{#each channels as { name, playlistId }}
 			<button
-				on:click={() => toggleNews(playlistId)}
+				on:click={() => (activePlaylistId = playlistId)}
 				class="btn btn-sm mr-2 mb-2 {activePlaylistId === playlistId
 					? 'bg-blue-700 text-white'
 					: 'bg-gray-200 text-gray-800'}"
@@ -66,7 +52,3 @@
 		{/if}
 	{/each}
 </article>
-
-<style>
-	/* Optional: Add custom styles here */
-</style>

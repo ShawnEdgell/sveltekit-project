@@ -9,7 +9,7 @@
 	/>
 </svelte:head>
 
-<section>
+<article>
 	<h1>Mods</h1>
 	<p>Check out our latest mods.</p>
 	<div class="flex w-full flex-col border-opacity-50 mb-6">
@@ -33,4 +33,4 @@
 		<div class="divider divider-info">Info</div>
 		<div class="divider divider-error">Error</div>
 	</div>
-</section>
+</article>
