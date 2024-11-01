@@ -1,13 +1,7 @@
 <script lang="ts">
-	export let categories: {
-		title: string;
-		description: string;
-		data: {
-			name: string;
-			owner: string;
-			link: string;
-		}[];
-	}[];
+	import type { Category } from '$lib';
+
+	export let categories: Category[];
 </script>
 
 {#each categories as category}

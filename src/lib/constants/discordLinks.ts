@@ -1,4 +1,6 @@
-export const modderDiscords = [
+import type { DiscordLink, Category } from '$lib/types';
+
+export const modderDiscords: DiscordLink[] = [
 	{
 		name: 'Skater XL Modding Discord',
 		link: 'https://discord.gg/uDkSEBKdga',
@@ -9,7 +11,7 @@ export const modderDiscords = [
 	{ name: "Guru's Discord", link: 'https://discord.gg/bYK5w53Jg6', owner: 'Guru' }
 ];
 
-export const mapDiscords = [
+export const mapDiscords: DiscordLink[] = [
 	{ name: "Aaronb543's Discord", link: 'https://discord.gg/FfF6aFs4MX', owner: 'Aaronb543' },
 	{ name: "B-Row's Discord", link: 'https://discord.gg/DVcJEhPh8M', owner: 'B-Row' },
 	{ name: "BigCat's Discord", link: 'https://discord.gg/qkvAMhrswY', owner: 'BigCat' },
@@ -29,7 +31,7 @@ export const mapDiscords = [
 	{ name: "Whynot_J's Discord", link: 'https://discord.gg/H5r9PU6zj7', owner: 'Whynot_J' }
 ];
 
-export const gearDiscords = [
+export const gearDiscords: DiscordLink[] = [
 	{ name: "Antikz's Discord", link: 'https://discord.gg/pHQWsYG5Mm', owner: 'Antikz' },
 	{
 		name: "ClutchDidThat's Discord",
@@ -50,7 +52,7 @@ export const gearDiscords = [
 	{ name: "Sungodpxllz's Discord", link: 'https://discord.gg/cUnwY8ZZej', owner: 'Sungodpxllz' }
 ];
 
-export const categories = [
+export const categories: Category[] = [
 	{
 		title: 'Modder Discords',
 		data: modderDiscords,

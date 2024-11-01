@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navItems } from '../data/navItems';
+	import { navItems } from '$lib';
 </script>
 
 <footer class="footer footer-center bg-base-100 p-10">

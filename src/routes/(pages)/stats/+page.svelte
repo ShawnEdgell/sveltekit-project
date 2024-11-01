@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { pageContent } from '../../../data/pageContent';
+	import { pageContent } from '$lib';
+	import Help from '../../../components/Help.svelte';
 
 	const { title, description, heading } = pageContent.stats;
 </script>
@@ -12,4 +13,6 @@
 <section>
 	<h1>{heading}</h1>
 	<p>{description}</p>
+	<Help />
+	<hr />
 </section>

@@ -5,5 +5,9 @@
 
 html,
 body {
-	@apply h-full w-full;
+	@apply h-full w-full break-words overscroll-none;
+}
+
+a {
+	@apply no-underline hover:no-underline;
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pageContent } from '../../../data/pageContent';
+	import { pageContent } from '$lib/constants';
 	import GettingStarted from './content/GettingStarted.svelte';
 	import MapGear from './content/MapGear.svelte';
 	import StatsSettings from './content/StatsSettings.svelte';
@@ -15,6 +15,7 @@
 <section>
 	<h1>{heading}</h1>
 	<p>{description}</p>
+	<hr />
 </section>
 
 <GettingStarted />

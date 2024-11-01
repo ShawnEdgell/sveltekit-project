@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navItems } from '../data/navItems';
+	import { navItems } from '$lib';
 </script>
 
 <div class="drawer">
