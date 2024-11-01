@@ -5,5 +5,5 @@
 
 html,
 body {
-	@apply h-full overscroll-none;
+	@apply h-full w-full;
 }

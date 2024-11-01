@@ -1,48 +1,59 @@
 import type { PageServerLoad } from './$types';
 import { YOUTUBE_API_KEY } from '$env/static/private';
+import type {
+	YouTubeAPIResponseItem,
+	YouTubeAPIResponse,
+	YouTubeItem
+} from '../data/types/YouTubeTypes';
 
-interface YouTubePlaylistItem {
-	snippet: {
-		title: string;
-		publishedAt: string;
-		description: string;
-		resourceId: {
-			videoId: string;
-		};
-	};
-}
+const YOUTUBE_API_BASE = 'https://www.googleapis.com/youtube/v3';
+const CHANNELS = [
+	{ id: 'UUpBQRZl7apZt_LQXKgqKQiQ', type: 'playlist' }, // Skater XL
+	{ id: 'PLWmRSsZZ1RCW-0uQWKlCAiGZVnIaRYaTm', type: 'playlist' }, // Session
+	{ id: 'UCSBQJEWTWOUCO65xvoDfljw', type: 'channel' } // Skate
+];
 
-export const load: PageServerLoad = async () => {
-	if (!YOUTUBE_API_KEY) {
-		throw new Error('API key is missing');
+// Simplified function to map API response to YouTubeItem format
+const mapYouTubeData = (data: YouTubeAPIResponse, type: string, id: string): YouTubeItem[] =>
+	data.items.map((item: YouTubeAPIResponseItem) => ({
+		title: item.snippet.title,
+		publishedAt: item.snippet.publishedAt,
+		description: item.snippet.description,
+		videoId:
+			type === 'playlist' ? (item.snippet.resourceId?.videoId ?? '') : (item.id?.videoId ?? ''),
+		playlistId: type === 'playlist' ? id : '',
+		showFullDescription: false
+	})) || [];
+
+// Fetches YouTube data for each channel or playlist
+const fetchYouTubeData = async (id: string, type: string): Promise<YouTubeItem[]> => {
+	const endpoint = type === 'playlist' ? 'playlistItems' : 'search';
+	const params =
+		type === 'playlist'
+			? `playlistId=${id}`
+			: `channelId=${id}&order=date&type=video&videoDuration=medium`;
+	const url = `${YOUTUBE_API_BASE}/${endpoint}?part=snippet&${params}&maxResults=5&key=${YOUTUBE_API_KEY}`;
+
+	try {
+		const response = await fetch(url);
+		if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+
+		const data = await response.json();
+		return mapYouTubeData(data, type, id);
+	} catch (error) {
+		console.error(`Failed to fetch data for ${id}:`, error);
+		return [];
 	}
+};
 
-	const playlistIds = [
-		'UUpBQRZl7apZt_LQXKgqKQiQ', // Skater XL
-		'PLWmRSsZZ1RCW-0uQWKlCAiGZVnIaRYaTm', // Session
-		'UUSBQJEWTWOUCO65xvoDfljw' // Skate.
-	];
+// Load function for SvelteKit page
+export const load: PageServerLoad = async () => {
+	if (!YOUTUBE_API_KEY) throw new Error('API key is missing');
 
-	const fetchVideos = async (playlistId: string) => {
-		const res = await fetch(
-			`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=5&key=${YOUTUBE_API_KEY}`
-		);
-		const data = await res.json();
-		return (
-			data.items?.map((item: YouTubePlaylistItem) => ({
-				title: item.snippet.title,
-				publishedAt: item.snippet.publishedAt,
-				description: item.snippet.description,
-				videoId: item.snippet.resourceId.videoId, // Fixed typo here
-				playlistId,
-				showFullDescription: false,
-				iframeLoaded: false
-			})) || []
-		);
-	};
-
-	const videosArrays = await Promise.all(playlistIds.map(fetchVideos));
-	const videos = videosArrays
+	const videoResults = await Promise.all(
+		CHANNELS.map(({ id, type }) => fetchYouTubeData(id, type))
+	);
+	const videos = videoResults
 		.flat()
 		.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 

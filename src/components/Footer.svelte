@@ -1,8 +1,14 @@
+<script lang="ts">
+	import { navItems } from '../data/navItems';
+</script>
+
 <footer class="footer footer-center bg-base-100 p-10">
 	<nav class="grid grid-flow-col gap-4">
-		<a href="/about" class="link link-hover" data-sveltekit-preload-data="hover">About Us</a>
-		<a href="/mods" class="link link-hover" data-sveltekit-preload-data="hover">Mods</a>
-		<a href="/community" class="link link-hover" data-sveltekit-preload-data="hover">Community</a>
+		{#each navItems as { href, label }}
+			<a {href}>
+				<span>{label}</span>
+			</a>
+		{/each}
 	</nav>
 	<nav>
 		<div class="grid grid-flow-col gap-4">
@@ -44,6 +50,6 @@
 		</div>
 	</nav>
 	<aside>
-		<p>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
+		<p>Skatebit {new Date().getFullYear()} - The Skater XL Modding Community</p>
 	</aside>
 </footer>

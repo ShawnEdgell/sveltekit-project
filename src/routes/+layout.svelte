@@ -4,12 +4,14 @@
 	import Footer from '../components/Footer.svelte';
 </script>
 
-<div data-theme="light" class="flex flex-col items-center min-h-screen">
-	<div class="fixed top-0 w-full z-10">
-		<Navbar />
+<div>
+	<div data-theme="light" class="flex flex-col min-h-screen w-full items-center">
+		<div class="fixed top-0 w-full z-10">
+			<Navbar />
+		</div>
+		<main class="prose lg:prose-xl w-full px-4 pt-24 lg:pt-28 pb-8 overscroll-none">
+			<slot />
+		</main>
 	</div>
-	<main class="prose lg:prose-xl w-full flex-1 mt-[4.5rem] px-4 py-8">
-		<slot />
-	</main>
 	<Footer />
 </div>

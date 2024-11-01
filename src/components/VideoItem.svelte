@@ -2,15 +2,24 @@
 	export let video: {
 		title: string;
 		publishedAt: string;
-		description?: string;
+		description: string;
 		videoId: string;
+		playlistId: string;
+		showFullDescription: boolean;
 	};
 
 	let showIframe = false;
-	let showFullDescription = false;
 
 	function toggleDescription() {
-		showFullDescription = !showFullDescription;
+		video.showFullDescription = !video.showFullDescription;
+	}
+
+	function formatDate(dateString: string) {
+		return new Date(dateString).toLocaleDateString('en-US', {
+			month: 'long',
+			day: 'numeric',
+			year: 'numeric'
+		});
 	}
 
 	function loadIframe() {
@@ -20,37 +29,29 @@
 
 <div class="mb-8">
 	<h2 class="text-xl font-semibold">{video.title}</h2>
-	<p
-		class="text-sm text-gray-500"
-		class:mb-2={video.description?.trim()}
-		class:mb-4={!video.description?.trim()}
-	>
-		{new Date(video.publishedAt).toLocaleDateString('en-US', {
-			month: 'long',
-			day: 'numeric',
-			year: 'numeric'
-		})}
-	</p>
+	<p class="text-sm text-gray-500 mb-2">{formatDate(video.publishedAt)}</p>
 
 	{#if video.description?.trim()}
-		<p class="mb-2 break-words">
-			{#if showFullDescription || video.description.length <= 100}
-				{video.description}
-			{:else}
-				{video.description.slice(0, 100)}...
-			{/if}
-		</p>
 		{#if video.description.length > 100}
-			<button on:click={toggleDescription} class="text-blue-700 hover:underline mb-4">
-				{showFullDescription ? 'Show less' : 'Read more'}
-			</button>
+			{#if video.showFullDescription}
+				<p class="mb-2 break-words">{video.description}</p>
+				<button on:click={toggleDescription} class="text-blue-700 hover:underline mb-4">
+					Show less
+				</button>
+			{:else}
+				<p class="mb-2 break-words">{video.description.slice(0, 100)}...</p>
+				<button on:click={toggleDescription} class="text-blue-700 hover:underline mb-4">
+					Read more
+				</button>
+			{/if}
+		{:else}
+			<p class="mb-4">{video.description}</p>
 		{/if}
 	{/if}
 
-	<div class="relative w-full pb-[56.25%] h-0 overflow-hidden mb-4">
+	<div class="video-container mb-4">
 		{#if showIframe}
 			<iframe
-				class="absolute top-0 left-0 w-full h-full"
 				src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
 				title={video.title}
 				frameborder="0"
@@ -60,7 +61,7 @@
 			></iframe>
 		{:else}
 			<div
-				class="absolute top-0 left-0 w-full h-full flex items-center justify-center cursor-pointer group"
+				class="video-placeholder"
 				on:click={loadIframe}
 				role="button"
 				tabindex="0"
@@ -72,24 +73,70 @@
 				}}
 			>
 				<img
-					class="absolute w-full h-full object-cover"
 					src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
 					alt={video.title}
 					loading="lazy"
 				/>
-				<svg
-					class="relative w-16 h-16 text-white z-5 transform transition-transform duration-300 group-hover:scale-110"
-					viewBox="0 0 16 16"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
+				<svg class="play-button" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"
+					><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+						id="SVGRepo_tracerCarrier"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></g><g id="SVGRepo_iconCarrier"
+						><path
+							fill="red"
+							d="M14.712 4.633a1.754 1.754 0 00-1.234-1.234C12.382 3.11 8 3.11 8 3.11s-4.382 0-5.478.289c-.6.161-1.072.634-1.234 1.234C1 5.728 1 8 1 8s0 2.283.288 3.367c.162.6.635 1.073 1.234 1.234C3.618 12.89 8 12.89 8 12.89s4.382 0 5.478-.289a1.754 1.754 0 001.234-1.234C15 10.272 15 8 15 8s0-2.272-.288-3.367z"
+						></path><path fill="#ffffff" d="M6.593 10.11l3.644-2.098-3.644-2.11v4.208z"></path></g
+					></svg
 				>
-					<path
-						fill="red"
-						d="M14.712 4.633a1.754 1.754 0 00-1.234-1.234C12.382 3.11 8 3.11 8 3.11s-4.382 0-5.478.289c-.6.161-1.072.634-1.234 1.234C1 5.728 1 8 1 8s0 2.283.288 3.367c.162.6.635 1.073 1.234 1.234C3.618 12.89 8 12.89 8 12.89s4.382 0 5.478-.289a1.754 1.754 0 001.234-1.234C15 10.272 15 8 15 8s0-2.272-.288-3.367z"
-					></path>
-					<path fill="#ffffff" d="M6.593 10.11l3.644-2.098-3.644-2.11v4.208z"></path>
-				</svg>
 			</div>
 		{/if}
 	</div>
 </div>
+
+<style>
+	.video-container {
+		position: relative;
+		width: 100%;
+		/* 16:9 Aspect Ratio */
+		padding-bottom: 56.25%;
+		height: 0;
+		overflow: hidden;
+	}
+
+	.video-container iframe,
+	.video-placeholder {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.video-placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+
+	.video-placeholder img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.play-button {
+		position: relative;
+		width: 64px;
+		height: 64px;
+		color: white;
+		z-index: 1;
+		transition: transform 0.3s;
+	}
+
+	.video-placeholder:hover .play-button {
+		transform: scale(1.1);
+	}
+</style>

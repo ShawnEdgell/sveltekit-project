@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { pageContent } from '../../../data/pageContent';
 
-	const { title, description, heading } = pageContent.mods;
+	const { title, description, heading } = pageContent.stats;
 </script>
 
 <svelte:head>

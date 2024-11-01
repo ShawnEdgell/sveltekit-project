@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { navItems } from '../data/navItems';
+</script>
+
 <div class="drawer">
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col">
@@ -21,18 +25,17 @@
 				</label>
 			</div>
 			<div class="mx-2 flex-1">
-				<a
-					href="/"
-					class="btn btn-ghost italic font-bold text-xl"
-					data-sveltekit-preload-data="hover">POPLAND</a
-				>
+				<a href="/" class="btn btn-ghost italic font-extrabold text-xl">SKATEBIT</a>
 			</div>
 			<div class="hidden flex-none sm:block">
 				<ul class="menu menu-horizontal">
-					<!-- Navbar menu content here -->
-					<li><a href="/about" data-sveltekit-preload-data="hover">About Us</a></li>
-					<li><a href="/mods" data-sveltekit-preload-data="hover">Mods</a></li>
-					<li><a href="/community" data-sveltekit-preload-data="hover">Community</a></li>
+					{#each navItems as { href, label }}
+						<li>
+							<a {href}>
+								<span>{label}</span>
+							</a>
+						</li>
+					{/each}
 				</ul>
 			</div>
 		</div>
@@ -40,10 +43,13 @@
 	<div class="drawer-side">
 		<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
 		<ul class="menu menu-lg bg-base-200 min-h-full w-80 p-4">
-			<!-- Sidebar content here -->
-			<li><a href="/about" data-sveltekit-preload-data="hover">About Us</a></li>
-			<li><a href="/mods" data-sveltekit-preload-data="hover">Mods</a></li>
-			<li><a href="/community" data-sveltekit-preload-data="hover">Community</a></li>
+			{#each navItems as { href, label }}
+				<li>
+					<a {href}>
+						<span>{label}</span>
+					</a>
+				</li>
+			{/each}
 		</ul>
 	</div>
 </div>
