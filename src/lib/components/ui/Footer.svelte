@@ -3,15 +3,16 @@
 </script>
 
 <footer class="footer footer-center bg-base-100 p-10">
-	<nav class="grid grid-flow-col gap-4">
+	<nav class="grid gap-4 sm:grid-flow-col sm:auto-cols-auto text-center">
 		{#each navItems as { href, label }}
-			<a {href}>
+			<a {href} class="underline">
 				<span>{label}</span>
 			</a>
 		{/each}
 	</nav>
+
 	<nav>
-		<div class="grid grid-flow-col gap-4">
+		<div class="flex justify-center gap-4 sm:grid sm:grid-flow-col">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
@@ -49,7 +50,8 @@
 			</svg>
 		</div>
 	</nav>
-	<aside>
+
+	<aside class="text-center">
 		<p>Skatebit {new Date().getFullYear()} - The Skater XL Modding Community</p>
 	</aside>
 </footer>

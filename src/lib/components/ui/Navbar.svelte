@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navItems } from '$lib';
+	import { navItems, LoginAvatar } from '$lib';
 </script>
 
 <div class="drawer">
@@ -38,6 +38,7 @@
 					{/each}
 				</ul>
 			</div>
+			<LoginAvatar />
 		</div>
 	</div>
 	<div class="drawer-side">

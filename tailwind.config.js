@@ -6,7 +6,7 @@ import aspectRatio from '@tailwindcss/aspect-ratio';
 /** @type {import('tailwindcss').Config} */
 export default {
 	mode: 'jit', // Enable Just-In-Time mode
-	purge: ['./src/**/*.{html,js,svelte,ts}', './src/app.html'], // Purge unused styles
+	content: ['./src/**/*.{html,js,svelte,ts}', './src/app.html'], // Purge unused styles
 	theme: {
 		extend: {}
 	},

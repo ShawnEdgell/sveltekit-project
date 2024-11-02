@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { pageContent, categories } from '$lib';
-	import ModWebsite from './content/ModWebsite.svelte';
-	import XlHub from './content/XLHub.svelte';
-	import Tables from './content/Tables.svelte';
+	import { pageHeader, categories, ModWebsite, XLHub, Tables } from '$lib';
 
-	const { title, description, heading } = pageContent.links;
+	const { title, description, heading } = pageHeader.links;
 </script>
 
 <svelte:head>
@@ -19,5 +16,5 @@
 </section>
 
 <ModWebsite />
-<XlHub />
+<XLHub />
 <Tables {categories} />

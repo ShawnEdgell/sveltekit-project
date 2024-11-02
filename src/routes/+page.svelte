@@ -1,8 +1,7 @@
 <script lang="ts">
-	import VideoItem from '../components/VideoItem.svelte';
-	import { pageContent } from '$lib';
+	import { pageHeader, VideoItem } from '$lib';
 
-	const { title, description, heading } = pageContent.news;
+	const { title, description, heading } = pageHeader.news;
 
 	export let data;
 	let { videos } = data;

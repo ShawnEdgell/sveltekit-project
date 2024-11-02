@@ -9,5 +9,5 @@ body {
 }
 
 a {
-	@apply no-underline hover:no-underline;
+	@apply hover:no-underline;
 }

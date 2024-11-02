@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { YOUTUBE_API_KEY } from '$env/static/private';
-import type { YouTubeAPIResponseItem, YouTubeAPIResponse, YouTubeItem } from '$lib/types';
+import type { YouTubeAPIResponseItem, YouTubeAPIResponse, YouTubeItem } from '$lib';
 
 const YOUTUBE_API_BASE = 'https://www.googleapis.com/youtube/v3';
 const CHANNELS = [

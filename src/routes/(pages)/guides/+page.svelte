@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { pageContent } from '$lib/constants';
-	import GettingStarted from './content/GettingStarted.svelte';
-	import MapGear from './content/MapGear.svelte';
-	import StatsSettings from './content/StatsSettings.svelte';
+	import { pageHeader, GettingStarted, MapGear, StatsSettings } from '$lib';
 
-	const { title, description, heading } = pageContent.guides;
+	const { title, description, heading } = pageHeader.guides;
 </script>
 
 <svelte:head>

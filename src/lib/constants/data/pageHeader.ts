@@ -1,4 +1,4 @@
-export const pageContent = {
+export const pageHeader = {
 	news: {
 		title: 'Skatebit - Recent News',
 		description:
